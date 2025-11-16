@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Intelligence Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <!-- Login Container -->
+    <div class="container">
+        <div class="login-container" id="loginContainer">
+            <div class="login-logo">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h1 class="login-title">AI-Powered Intelligence Journal</h1>
+            <p class="login-subtitle">Your private 1-year transformation plan with AI insights</p>
+            
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Passkey</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your passkey">
+                </div>
+                <button class="btn" id="loginBtn">
+                    <i class="fas fa-lock"></i>
+                    Access Journal
+                </button>
+            </div>
+            
+            <div class="setup-note" id="setupNote" style="display: none;">
+                <h4>First Time Setup</h4>
+                <p>Since this is your first time, the username and passkey you enter will be set as your credentials. Remember them carefully as they cannot be recovered if lost.</p>
+            </div>
+        </div>
+        
+        <!-- App Container (hidden until login) -->
+        <div class="app-container" id="appContainer">
+            <header>
+                <div>
+                    <div class="logo">
+                        <i class="fas fa-brain"></i>
+                        <span>AI-Powered Intelligence Journal</span>
+                    </div>
+                    <div class="tagline">Your 1-Year Transformation Plan with Gemini AI</div>
+                </div>
+                <div class="user-menu">
+                    <div class="user-info">
+                        <div class="user-name" id="userName">User</div>
+                        <div class="user-status" id="userStatus">Secured</div>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-page="journal">Daily Journal</button>
+                <button class="nav-tab" data-page="archive">Archive & Search</button>
+                <button class="nav-tab" data-page="progress">Progress Overview</button>
+                <button class="nav-tab" data-page="ai">AI Insights</button>
+                <button class="nav-tab" data-page="security">Security</button>
+            </div>
+
+            <!-- Journal Page -->
+            <div id="journal-page" class="page active">
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3 id="totalEntries">0</h3>
+                        <p>Total Entries</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="currentStreak">0</h3>
+                        <p>Current Streak</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="completionRate">0%</h3>
+                        <p>Completion Rate</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="daysRemaining">365</h3>
+                        <p>Days Remaining</p>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="sidebar">
+                        <h2><i class="fas fa-calendar-alt"></i> Monthly Plan</h2>
+                        
+                        <div class="month-nav">
+                            <button class="month-btn" id="prevMonthBtn"><i class="fas fa-chevron-left"></i></button>
+                            <div class="month-title" id="monthTitle">Month 1: Mental Reprogramming</div>
+                            <button class="month-btn" id="nextMonthBtn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+
+                        <div class="month-content">
+                            <div class="month-theme" id="monthTheme">Mental Reprogramming (The Foundation)</div>
+                            <div class="month-goal" id="monthGoal">Deconstruct mental biases and rebuild clarity</div>
+                            
+                            <h4>Key Habits:</h4>
+                            <ul class="habits-list" id="habitsList">
+                                <!-- Habits will be populated by JavaScript -->
+                            </ul>
+                            
+                            <div class="sources-list">
+                                <h4>Knowledge Sources:</h4>
+                                <ul id="sourcesList">
+                                    <!-- Sources will be populated by JavaScript -->
+                                </ul>
+                            </div>
+                            
+                            <div class="challenge-box">
+                                <h4>Monthly Challenge</h4>
+                                <p id="monthChallenge">7-day 'No Emotion Decision' challenge — respond only with logic</p>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <h3>Year Progress</h3>
+                                <span id="progressPercent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span>Start</span>
+                                <span>End</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main-content">
+                        <div class="journal-header">
+                            <div>
+                                <h2>Daily Journal</h2>
+                                <div class="current-date" id="currentDate"></div>
+                            </div>
+                            <div>
+                                <span id="autoSaveIndicator" class="auto-save-indicator" style="display: none;">
+                                    <i class="fas fa-save"></i> Auto-saved
+                                </span>
+                                <button class="btn btn-ai" id="aiSuggestBtn">
+                                    <i class="fas fa-robot"></i>
+                                    AI Suggestions
+                                </button>
+                                <button class="btn" id="skipDayBtn">
+                                    <i class="fas fa-forward"></i>
+                                    Skip Day
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="journal-form" id="journalForm">
+                            <div class="form-group">
+                                <label for="entryFocus">Focus of the Day</label>
+                                <select id="entryFocus" class="form-control">
+                                    <option value="logic">Logic & Critical Thinking</option>
+                                    <option value="focus">Focus & Discipline</option>
+                                    <option value="learning">Learning & Memory</option>
+                                    <option value="systems">Systems Thinking</option>
+                                    <option value="emotion">Emotional Mastery</option>
+                                    <option value="communication">Communication & Influence</option>
+                                    <option value="technical">Technical Power</option>
+                                    <option value="strategy">Strategic Thinking</option>
+                                    <option value="creativity">Creativity & Innovation</option>
+                                    <option value="psychology">Psychology & Leadership</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="entryStudy">What I studied/read</label>
+                                <textarea id="entryStudy" class="form-control" placeholder="Describe what you studied or read today"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="entryInsights">Insights gained</label>
+                                <textarea id="entryInsights" class="form-control" placeholder="What new insights or connections did you make?"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="entryPractice">What I built or practiced</label>
+                                <textarea id="entryPractice" class="form-control" placeholder="Describe what you created, practiced, or applied"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="entryReflection">Reflection</label>
+                                <textarea id="entryReflection" class="form-control" placeholder="What did you question today? What patterns did you notice?"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Daily Rating</label>
+                                <div class="rating-container">
+                                    <div class="rating-btn" data-rating="1">1</div>
+                                    <div class="rating-btn" data-rating="2">2</div>
+                                    <div class="rating-btn" data-rating="3">3</div>
+                                    <div class="rating-btn" data-rating="4">4</div>
+                                    <div class="rating-btn" data-rating="5">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Insights Section -->
+                        <div class="ai-insights" id="aiInsights" style="display: none;">
+                            <div class="ai-header">
+                                <i class="fas fa-robot ai-icon"></i>
+                                <h3>Gemini AI Insights</h3>
+                            </div>
+                            <div class="ai-content" id="aiContent">
+                                <!-- AI content will be populated here -->
+                            </div>
+                        </div>
+
+                        <div class="journal-entries" id="journalEntries">
+                            <!-- Journal entries will be dynamically added here -->
+                            <div class="empty-state" id="emptyState">
+                                <i class="fas fa-book-open"></i>
+                                <h3>No journal entries yet</h3>
+                                <p>Start your dangerous intelligence journey by creating your first entry</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archive Page -->
+            <div id="archive-page" class="page">
+                <div class="journal-header">
+                    <h2>Archive & Search</h2>
+                    <button class="btn btn-ai" id="archiveAnalysisBtn">
+                        <i class="fas fa-chart-line"></i>
+                        AI Analysis
+                    </button>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="searchInput" class="search-control" placeholder="Search across all journal entries...">
+                    <div class="filters">
+                        <select id="monthFilter" class="filter-select">
+                            <option value="">All Months</option>
+                            <!-- Months will be populated by JavaScript -->
+                        </select>
+                        <select id="focusFilter" class="filter-select">
+                            <option value="">All Focus Areas</option>
+                            <!-- Focus areas will be populated by JavaScript -->
+                        </select>
+                        <select id="ratingFilter" class="filter-select">
+                            <option value="">All Ratings</option>
+                            <option value="5">5 Stars</option>
+                            <option value="4">4+ Stars</option>
+                            <option value="3">3+ Stars</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="archive-stats">
+                    <div class="archive-stat">
+                        <h4>Entries Found</h4>
+                        <p id="entriesFound">0</p>
+                    </div>
+                    <div class="archive-stat">
+                        <h4>Average Rating</h4>
+                        <p id="averageRating">0.0</p>
+                    </div>
+                    <div class="archive-stat">
+                        <h4>Most Active Month</h4>
+                        <p id="mostActiveMonth">-</p>
+                    </div>
+                </div>
+
+                <div id="archiveResults">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+
+            <!-- Progress Page -->
+            <div id="progress-page" class="page">
+                <div class="journal-header">
+                    <h2>Progress Overview</h2>
+                    <button class="btn btn-ai" id="progressAnalysisBtn">
+                        <i class="fas fa-robot"></i>
+                        AI Progress Report
+                    </button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3 id="progressTotalEntries">0</h3>
+                        <p>Total Entries</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="progressCompletion">0%</h3>
+                        <p>Year Completion</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="progressAvgRating">0.0</h3>
+                        <p>Avg. Rating</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="progressBestMonth">-</h3>
+                        <p>Best Month</p>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    <h3>Monthly Performance</h3>
+                    <div id="monthlyPerformance">
+                        <!-- Monthly performance chart will be displayed here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insights Page -->
+            <div id="ai-page" class="page">
+                <div class="journal-header">
+                    <h2>AI Insights & Settings</h2>
+                </div>
+
+                <div class="ai-settings">
+                    <h3>Gemini AI Configuration</h3>
+                    <div class="api-key-container">
+                        <input type="password" id="apiKeyInput" class="form-control api-key-input" placeholder="Enter your Gemini API key">
+                        <button class="btn btn-ai" id="saveApiKeyBtn">
+                            <i class="fas fa-save"></i> Save Key
+                        </button>
+                    </div>
+                    <div class="api-status">
+                        <div class="status-indicator" id="apiStatusIndicator"></div>
+                        <span id="apiStatusText">API key not configured</span>
+                    </div>
+                    <p>Get your API key from <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--ai-color);">Google AI Studio</a></p>
+                </div>
+
+                <div class="ai-features">
+                    <div class="ai-feature">
+                        <h4><i class="fas fa-lightbulb"></i> Daily Suggestions</h4>
+                        <p>Get AI-powered suggestions for your daily journal entries based on your monthly focus</p>
+                    </div>
+                    <div class="ai-feature">
+                        <h4><i class="fas fa-chart-line"></i> Progress Analysis</h4>
+                        <p>Receive detailed analysis of your progress and personalized recommendations</p>
+                    </div>
+                    <div class="ai-feature">
+                        <h4><i class="fas fa-book"></i> Knowledge Enhancement</h4>
+                        <p>Get additional resources and learning materials tailored to your current focus</p>
+                    </div>
+                    <div class="ai-feature">
+                        <h4><i class="fas fa-brain"></i> Pattern Recognition</h4>
+                        <p>AI identifies patterns in your learning and suggests improvements</p>
+                    </div>
+                </div>
+
+                <div class="ai-insights" style="margin-top: 30px;">
+                    <div class="ai-header">
+                        <i class="fas fa-robot ai-icon"></i>
+                        <h3>AI Analysis of Your Journal</h3>
+                    </div>
+                    <div class="ai-content" id="fullAnalysisContent">
+                        <p>Configure your Gemini API key to unlock powerful AI insights into your journal data.</p>
+                    </div>
+                    <button class="btn btn-ai" id="fullAnalysisBtn" style="margin-top: 15px;">
+                        <i class="fas fa-magic"></i> Generate Full Analysis
+                    </button>
+                </div>
+            </div>
+
+            <!-- Security Page -->
+            <div id="security-page" class="page">
+                <div class="journal-header">
+                    <h2>Security Settings</h2>
+                </div>
+
+                <div class="security-settings">
+                    <h3>Account Security</h3>
+                    <p>Your journal data is encrypted and stored locally in your browser. Only someone with your credentials can access it.</p>
+                    
+                    <div class="security-actions">
+                        <button class="security-btn" id="changePasswordBtn">
+                            <i class="fas fa-key"></i> Change Passkey
+                        </button>
+                        <button class="security-btn" id="exportDataBtn">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="security-btn danger" id="resetDataBtn">
+                            <i class="fas fa-trash"></i> Reset All Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="security-settings">
+                    <h3>Security Information</h3>
+                    <p><strong>Username:</strong> <span id="displayUsername"></span></p>
+                    <p><strong>Account Created:</strong> <span id="accountCreated"></span></p>
+                    <p><strong>Last Login:</strong> <span id="lastLogin"></span></p>
+                    <p><strong>Data Location:</strong> Your browser's local storage (encrypted)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        
+    </script>
+</body>
+</html>
