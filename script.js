@@ -396,37 +396,47 @@
         }
 
         // Gemini AI Integration Functions
+        // Gemini AI Integration Functions
         async function callGeminiAPI(prompt) {
-            if (!state.geminiApiKey) {
-                throw new Error('Gemini API key not configured');
-            }
+                if (!state.geminiApiKey) {
+                    throw new Error('Gemini API key not configured');
+                }
 
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${state.geminiApiKey}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }]
-                    })
-                });
+                try {
+                    const response = await fetch(
+                        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${state.geminiApiKey}`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              contents: [
+                                  {
+                                     parts: [{ text: prompt }]
+                                  }
+                            ]
+                        })
+                    }
+                );
 
                 if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
+                    const err = await response.json().catch(() => ({}));
+                    throw new Error(`API request failed ${response.status}: ${JSON.stringify(err)}`);
                 }
 
                 const data = await response.json();
-                return data.candidates[0].content.parts[0].text;
+
+                return (
+                    data.candidates?.[0]?.content?.parts?.[0]?.text ||
+                    "No response from Gemini"
+               );
+
             } catch (error) {
                 console.error('Gemini API Error:', error);
                 throw error;
-            }
-        }
+           }
+       }
 
         // Get AI suggestions for current journal entry
         async function getAiSuggestions() {
